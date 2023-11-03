@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Music Player</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+	<style>
+		body {
+			background-color: rgba(25,28,37,0.8);
+			color: white;
+			/* color: #B1CEEF; */
+		}
+		section{
+			display: flex;
+		}
+		#navBar{
+			margin: 2px;
+			padding: 20px 0px;
+			background-color: rgba(25,28,37,0.9);
+		}
+		span{
+			font-size: 30px !important;
+			color: white;
+			cursor: pointer;
+			padding-top: 10px;
+			margin: 20px;
+		}
+		
+		#totalContainer{
+			display: flex;	
+			flex-direction: column;
+		}
+
+		#categoriesContainer {
+			display: flex;
+			width: 93vw;
+			margin: 2px;
+			padding:0px 20px;
+			background-color: rgba(25,28,37,0.9);
+		}
+
+
+		#artistsDiv,#albumsDiv{
+			display: flex;
+			flex-wrap: wrap;
+			overflow: scroll;
+			margin-top: 0px;
+			padding-bottom:20px;
+		}
+		
+		/* Hide scrollbar track */
+		#artistsDiv::-webkit-scrollbar,#albumsDiv::-webkit-scrollbar {
+			width: 0;
+			height: 0;
+		}
+
+		.material-symbols-outlined {
+			font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 48
+		}
+
+		.material-symbols-outlined {
+			font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24
+		}
+
+		#songDetailsContainer {
+			display: flex;
+			flex-wrap: wrap;
+			margin: 2px;
+			width: 93vw;
+			background-color: rgba(25,28,37,0.9);
+		}
+		
+		
+		/* js's css  category details */
+		.category{
+			width: 300px;
+			height: 315px;
+			border-radius: 25px;
+			margin: 20px;
+			text-align: center;
+			box-shadow:0px 0px 40px rgba(0,0,0,0.9); 	
+		}
+
+		.category > img{
+			width: 200px;
+			height: 200px;
+			padding-top: 20px;
+			border-radius: 50%;
+		}
+
+		.category > h4{
+			/* border: 1px solid white; */
+			padding: 10px 0px 0px 0px;
+			margin: 0;
+		}
+
+		.category > p{
+			/* border: 1px solid white; */
+			padding-top: 10px;
+			margin: 0;
+
+		}
+		.category:hover{
+			background-color: rgba(255,255,255,0.2);
+		}
+		.sondId{
+			display: none;
+		}
+
+		/* songDetails details */
+		.songDetailsDiv{
+			width: 100vw;
+			height: 150px;
+			border: 3px solid white;
+			margin: 20px;
+			display: flex;
+			color: white;
+			/* text-align: center; */
+		}
+
+		.songDetailsDiv > img {
+			width: 100px;
+			height: 100px;
+			margin: 20px;
+		}
+		.songDivFlex > h3 {
+			margin: 20px 0px;
+		}
+		.songDivFlex > p {
+			margin: 0px;
+		}
+		
+		/* ------------------------ song container css --------------------------  */
+		#songContainer{
+			display: none;              /*  none */
+			width: 400px;
+			height: 600px;
+			border: 1px solid black;
+			border-radius: 20px;
+			margin: auto;
+		}
+		#songContainer > p{
+			margin: 30px;
+		}
+
+		#dynamicDiv{
+			width: 370px;
+			display: flex;               /*  none */
+			flex-direction: column;
+			align-items: center;
+			border-radius: 20px;
+			margin:30px auto;
+			/* background-color: rgba(25,28,37,0.9); */
+		}
+		#dynamicDiv > img{
+			width: 270px;
+			height: 270px;
+			margin: 5%;
+			border-radius: 20px;
+
+		}
+		#dynamicDiv > h2{
+			color: black;
+			margin-top: -5px;
+		}
+
+		#dynamicDiv > p{
+			color: black;
+			font-size: 25px;
+			margin-top: -3px;
+		}
+		.slider_container{
+			width: 100%;
+		}
+		.timingDiv{
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+		
+		#progress_bar{
+			width: 100%;
+			height: 10px;
+			/* background-color: #aaa; */
+			border-radius:20px;
+			background-color: rgba(25,28,37,0.8);
+			cursor: pointer;
+			margin-top: 15px;
+
+		}
+		#progressed{
+			background-color: #f80;
+			height: 10px;
+			border-radius:20px;
+			width: 0%;
+			/* transition:0.1s; */
+		}
+
+		.buttons > span{
+			cursor: pointer;
+			margin: 30px;
+			font-size: 40px !important;	
+		}
+		
+		
+		.inputDiv{
+			background-color: rgba(25,28,37,0.9);
+			width:88.9vw;
+			position:fixed;
+			z-index: 1;
+			padding:20px;	
+			margin:auto;
+		}
+		#searchInput{
+			width:600px;
+			padding:10px;
+		}
+/* 		------------------- search container css --------------------- */
+		#searchContainer{
+			width: 93vw;
+			height:98vh;
+			display: none;
+			margin: 2px;
+			background-color: rgba(25,28,37,0.9);
+			/* text-align:center; */
+			margin:auto;
+			overflow:scroll;
+		}
+		#searchContainer::-webkit-scrollbar {
+			/* width: 0;
+			height: 0; */
+			background-color: rgba(25,28,37,0.9);
+		}
+		#results{
+			background-color: rgba(25,28,37,0.9);
+			width:700px;
+			position: relative;
+			top:8%;
+		}
+		.smallEachDiv{
+			border: 2px solid white;
+			width:500px;
+			margin:20px;
+			padding:20px;
+			border-radius:20px 0px 20px 0px;
+		}
+		.smallEachDiv:hover{
+			background-color: rgba(255,255,255,0.2);
+		}
+		/*  ---------------------------sn's css --------------------------'*/
+		#snContainer{
+			display: none;              /*  none */
+			width: 400px;
+			height: 600px;
+			border: 1px solid black;
+			border-radius: 20px;
+			margin: auto;
+		}
+		#snContainer > p{
+			margin: 30px;
+		}
+
+		#sndynamicDiv{
+			width: 370px;
+			display: flex;               /*  none */
+			flex-direction: column;
+			align-items: center;
+			border-radius: 20px;
+			margin:30px auto;
+			/* background-color: rgba(25,28,37,0.9); */
+		}
+		#sndynamicDiv > img{
+			width: 270px;
+			height: 270px;
+			margin: 5%;
+			border-radius: 20px;
+
+		}
+		#sndynamicDiv > h2{
+			color: black;
+			margin-top: -5px;
+		}
+
+		#sndynamicDiv > p{
+			color: black;
+			font-size: 25px;
+			margin-top: -3px;
+		}
+		
+		.snSlider_container{
+			width: 100%;
+		}
+		.snTimingDiv{
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+		
+		#snProgress_bar{
+			width: 100%;
+			height: 10px;
+			/* background-color: #aaa; */
+			border-radius:20px;
+			background-color: rgba(25,28,37,0.8);
+			cursor: pointer;
+			margin-top: 15px;
+
+		}
+		#snProgressed{
+			background-color: #f80;
+			height: 10px;
+			border-radius:20px;
+			width: 0%;
+			/* transition:0.1s; */
+		}
+
+		.buttons > span{
+			cursor: pointer;
+			margin: 30px;
+			font-size: 40px !important;	
+		}
+	</style>
+</head>
+
+<body>
+	<section>
+		<div id="navBar">
+			<span class="material-symbols-outlined" id="home">home</span>
+			<span class="material-symbols-outlined" id="search">search</span>
+		</div>
+		<div id="totalContainer">
+			
+			<div id="categoriesContainer">
+				<div id="artistsContainer.buttons{
+					display: flex !important;
+					justify-content: space-between !important;
+				}">
+					<h2>Artists</h2>
+					<div id="artistsDiv">
+						<!-- artistsDetails from js-->
+					</div>
+				</div>
+				<div id="albumsContainer">
+					<h2>Albums</h2>
+					<div id="albumsDiv">
+						<!-- albumsDetails from js -->
+					</div>
+				</div>
+			</div>
+	
+			<div id="songDetailsContainer">
+				<!-- <h1>Welcome</h1> -->
+				<!-- <a href="mainPage.html">Back</a> -->	
+			</div>
+		
+			<div id="songContainer">
+				<!-- other song details -->
+				<!-- <p>Playing from my own play list</p> -->
+				<div id="dynamicDiv">
+							<img>						
+							<h2>Song name</h2>
+							<p>Category</p> 
+						<audio id="audioPlayer"></audio>
+						<div id="progress_bar">
+							<div id="progressed"></div>
+						</div>
+						<div class="slider_container">							
+							<div class="timingDiv">
+								<p class="current_time">00:00</p>
+								<p class="total_duration">00:00</p>
+							</div>
+						</div>
+						<span class="material-symbols-outlined" id="pause">pause</span>
+					</div>
+					
+				</div>
+			</div>
+			
+			 <div id="searchContainer">
+				<div class="inputDiv">
+					<input type="text" id="searchInput" placeholder="Search Song...">
+				</div>
+				<div id="results"></div>
+				<div id="snContainer">
+					<div id="sndynamicDiv">
+								<img>						
+								<h2>Song name</h2>
+								<!-- <p>Category</p> --> 
+							<audio id="snAudioPlayer"></audio>
+							<div id="snProgress_bar">
+								<div id="snProgressed"></div>
+							</div>
+							<div class="snSlider_container">							
+								<div class="snTimingDiv">
+									<p class="snCurrent_time">00:00</p>
+									<p class="snTotal_duration">00:00</p>
+								</div>
+							</div>
+						<div class="buttons">
+							<span class="material-symbols-outlined" id="snBackward">arrow_back_ios</span>
+							<span class="material-symbols-outlined" id="snPause">pause</span>
+							<span class="material-symbols-outlined" id="snForward">arrow_forward_ios</span>
+						</div>
+					</div>
+				</div>
+			</div> 
+			
+	</section>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="categoryDetails.js"></script>
+<!-- <script src="songDetails.js"></script> -->
+<script src="search.js"></script>
+
+</html>
